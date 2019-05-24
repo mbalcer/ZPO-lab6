@@ -4,12 +4,20 @@ import annotation.Scheduled;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
+import java.time.LocalTime;
+
 @AllArgsConstructor
 public class Time {
     private int hour;
     private int minute;
     private int second;
+
+    public Time() {
+        LocalTime localTime = LocalTime.now();
+        this.hour = localTime.getHour();
+        this.minute = localTime.getMinute();
+        this.second = localTime.getSecond();
+    }
 
     @Scheduled
     public void moveClockBySecond() {
@@ -34,7 +42,7 @@ public class Time {
 
     @Scheduled
     public void showTime() {
-        System.out.println(String.format("%d:%d:%d", this.hour, this.minute, this.second));
+        System.out.println(String.format("%02d:%02d:%02d", this.hour, this.minute, this.second));
     }
 
 
