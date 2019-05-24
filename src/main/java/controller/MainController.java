@@ -1,6 +1,7 @@
 package controller;
 
 import annotation.Scheduled;
+import model.Time;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -9,9 +10,13 @@ import java.util.TimerTask;
 
 public class MainController {
     private Object object = null;
+    private Timer timer;
+
+    public MainController() {
+        timer = new Timer();
+    }
 
     public void startMethod(Method method, Object object) {
-        Timer timer = new Timer();
         Scheduled scheduled = method.getAnnotation(Scheduled.class);
         timer.schedule(new TimerTask() {
             @Override
@@ -23,6 +28,10 @@ public class MainController {
                 }
             }
         }, 0, scheduled.period());
+    }
+
+    public void stopMethod() {
+        timer.cancel();
     }
 
     public Class<?> searchClass(String nameClass) {
